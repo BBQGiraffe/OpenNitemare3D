@@ -8,12 +8,11 @@ so that it can be easily ported.
 
 ### libraries used(so far):
 * SDL2
-* OpenGL
 
-checklist (Note: some of these are finished but not yet posted as I have to clean up everything before it's posted.)
+checklist
 * ~~~get original sprite files working with SDL2~~
-* ~~Wolf3D style FPS controller~~
-* ~~Wall collision~~ 
+* Wolf3D style FPS controller
+* Wall collision 
 * Billboard sprites with collision
 * Sprite rotation based on
 
