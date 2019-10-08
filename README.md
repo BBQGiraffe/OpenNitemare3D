@@ -13,13 +13,13 @@ so that it can be easily ported.
 
 
 ## current goals:
-[x] get original sprite files working with SDL2
+- [x] get original sprite files working with SDL2
 
-[ ] Wolf3D style FPS controller
+- [ ] Wolf3D style FPS controller
 
-[ ] Wall collision 
+- [ ] Wall collision 
 
-[ ] Billboard sprites with collision.
+- [ ] Billboard sprites with collision.
 
 
 
