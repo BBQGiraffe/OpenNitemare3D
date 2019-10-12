@@ -7,7 +7,6 @@
 
 
 
-#pragma once
 #include <string>
 #include <tinyfiledialogs\tinyfiledialogs.h>
 #include <stdio.h>
