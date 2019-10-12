@@ -1,6 +1,9 @@
+#pragma once
 #include <stdio.h>
-
+#include <tinyfiledialogs/tinyfiledialogs.h>
 #include "pal.h"
+#include <string.h>
+#pragma warning(disable:4996)
 
 #define RED		0
 #define GREEN	1
@@ -17,18 +20,19 @@ size_t PAL::GetFileSize(FILE *pFile)
 	return fileLen;
 }
 
-uint PAL::ReadPal(std::string filename, uint32_t offset)
+unsigned int PAL::ReadPal(std::string filename, uint32_t offset)
 {
 	uint8_t buffer[3];
 	Palette curPal; 
 	size_t fileLen;
-	
+	const char* error;
 	mPalettes.clear();
 	
 	FILE *pFile = fopen(filename.c_str(), "rb");
 	if (pFile == NULL)
 	{
-		printf("File could not be opened\n");
+		error = "Could not open pallette file!";
+		tinyfd_messageBox(error, error, "ok", "error", 1);
 		return PAL_NOK;
 	}
 	
@@ -36,7 +40,8 @@ uint PAL::ReadPal(std::string filename, uint32_t offset)
 	
 	if (offset > fileLen)
 	{
-		printf("Offset greater than file size\n");
+		error = "Offset greater than file size!";
+		tinyfd_messageBox(error, error, "ok", "error", 1);
 		return PAL_NOK;
 	}
 	

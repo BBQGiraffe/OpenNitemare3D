@@ -5,7 +5,9 @@
 
 #include "pal.h"
 
-#include "SDL.h"
+#include <SDL2/SDL.h>
+#undef main
+
 
 #define IMG_OK 	0
 #define IMG_NOK	-1

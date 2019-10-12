@@ -26,7 +26,7 @@ private:
 protected:
 
 public:
-	uint ReadPal(std::string filename, uint32_t offset);
+	unsigned int ReadPal(std::string filename, uint32_t offset);
 	size_t GetNumPalettes();
 	Palette operator[](size_t);
 
