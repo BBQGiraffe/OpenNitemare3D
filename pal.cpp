@@ -1,9 +1,7 @@
-#pragma once
 #include <stdio.h>
 #include <tinyfiledialogs/tinyfiledialogs.h>
 #include "pal.h"
 #include <string.h>
-#pragma warning(disable:4996)
 
 #define RED		0
 #define GREEN	1
