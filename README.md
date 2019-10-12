@@ -10,7 +10,7 @@ so that it can be easily ported.
 
 ### libraries used(so far):
 * SDL2
-
+* tinyfiledialogs
 
 ## current goals:
 - [x] get original sprite files working with SDL2
