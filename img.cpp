@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <tinyfiledialogs/tinyfiledialogs.h>
+
 #include "img.h"
 
 #define APPARENT_OFFSET 1156
@@ -29,33 +29,24 @@ int IMG::ReadFiles(FILE* pFile, offsetVector& offsets)
 	uint8_t pixValue;
 	SDL_Surface* pSurface;
 
-	for (size_t offset : offsets)
+	if (fseek(pFile, offsets[0], SEEK_SET) != 0)
 	{
-		if (fseek(pFile, offset, SEEK_SET) != 0)
-		{
-			tinyfd_messageBox("Failed to seek to next file in list; malformed?", "Failed to seek to next file in list; malformed?", "ok", "error", 1);
-			return IMG_NOK;
-		}
+		printf("Failed to seek to next file in list; malformed?\n");
+		return IMG_NOK;
+	}
+
+	while (feof(pFile) == false)
+	{
 		fread(&sizeX, 1, 1, pFile);
 		fread(&sizeY, 1, 1, pFile);
 		fseek(pFile, 8, SEEK_CUR);
 		for (int i = 0; i < sizeX * sizeY; i++)
 		{
 			fread(&pixValue, 1, 1, pFile);
-			if (pixValue != 0xFF)
-			{
-				buffer[i * PIXEL_SIZE] = mPal[pixValue].r;
-				buffer[i * PIXEL_SIZE + 1] = mPal[pixValue].g;
-				buffer[i * PIXEL_SIZE + 2] = mPal[pixValue].b;
-				buffer[i * PIXEL_SIZE + 3] = 0xFF;
-			}
-			else
-			{
-				buffer[i * PIXEL_SIZE] = 0xFF;
-				buffer[i * PIXEL_SIZE + 1] = 0xFF;
-				buffer[i * PIXEL_SIZE + 2] = 0xFF;
-				buffer[i * PIXEL_SIZE + 3] = 0x00;
-			}
+			buffer[i * PIXEL_SIZE] = mPal[pixValue].r;
+			buffer[i * PIXEL_SIZE + 1] = mPal[pixValue].g;
+			buffer[i * PIXEL_SIZE + 2] = mPal[pixValue].b;
+			buffer[i * PIXEL_SIZE + 3] = 0xFF;
 		}
 
 		pSurface = SDL_CreateRGBSurfaceWithFormat(0, sizeY, sizeX,
@@ -75,7 +66,7 @@ void IMG::GetFileOffsets(FILE* pFile, offsetVector& offsets)
 {
 	int retval;
 	uint32_t offset;
-	uint32_t firstOffset = 0;
+	uint32_t lowestOffset = 0xFFFFFFFF;
 
 	do
 	{
@@ -83,9 +74,12 @@ void IMG::GetFileOffsets(FILE* pFile, offsetVector& offsets)
 		if (offset != 0)
 		{
 			offsets.push_back(offset);
+			if (offset < lowestOffset)
+			{
+				lowestOffset = offset;
+			}
 		}
-		if (firstOffset == 0) { firstOffset = offset; printf("First offset: %x\n", firstOffset); }
-	} while (ftell(pFile) < firstOffset && retval > 0);
+	} while (ftell(pFile) <= lowestOffset && retval > 0);
 }
 
 int IMG::LoadImgFile(std::string imgFile)
@@ -99,7 +93,7 @@ int IMG::LoadImgFile(std::string imgFile)
 	pFile = fopen(imgFile.c_str(), "rb");
 	if (pFile == NULL)
 	{
-		tinyfd_messageBox("could not open IMG file", "could not open IMG file", "ok", "error", 1);
+		printf("could not open IMG file\n");
 		return IMG_NOK;
 	}
 
@@ -108,7 +102,6 @@ int IMG::LoadImgFile(std::string imgFile)
 	GetFileOffsets(pFile, fileOffsets);
 	if (ReadFiles(pFile, fileOffsets) == IMG_NOK)
 	{
-		
 		return IMG_NOK;
 	}
 

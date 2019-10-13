@@ -2,6 +2,8 @@
 #define __ENGINE_H__
 #include <string>
 #include <SDL2/SDL.h>
+#undef main
+
 class Engine
 {
 public:
