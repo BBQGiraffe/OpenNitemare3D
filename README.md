@@ -1,7 +1,7 @@
 # OpenNitemare3D
 a C++ engine reimplementation of the 1994 MS-DOS FPS shooter Nitemare 3D
 
-### Note: this game is super early in development, all it can really do at the moment is create SDL surfaces for the game sprites
+### Note: this requires the original shareware Nitemare 3D game-files to work
 
 ## About:
 I started this project because I believe every game has the right to be ported to modern operating systems,
