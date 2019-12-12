@@ -5,8 +5,8 @@ a C++ engine reimplementation of the 1994 MS-DOS FPS shooter Nitemare 3D
 
 ## About:
 I started this project because I believe every game has the right to be ported to modern operating systems,
-the original game was made in C with some x86 assembly, this new version is in C++ and only uses open source, cross platform libraries,
-so that it can be easily ported.
+the original game was made in C with some x86 assembly, this new version is in C++ and only uses open source, cross platform libraries.
+
 
 ### libraries used(so far):
 * SDL2
@@ -15,11 +15,12 @@ so that it can be easily ported.
 ## current goals:
 - [x] get original sprite files working with SDL2
 
-- [ ] Wolf3D style FPS controller
+- [] create topdown version of game
 
-- [ ] Wall collision 
+- [] use raycasting to bring topdown version to the third dimension
+- [] implement A* navigation
 
-- [ ] Billboard sprites with collision.
+
 
 [![Demo](https://img.youtube.com/vi/rjXbe1gkl9I/0.jpg)](https://www.youtube.com/watch?v=rjXbe1gkl9I)
 
