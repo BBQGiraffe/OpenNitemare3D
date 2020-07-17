@@ -7,20 +7,10 @@ a C++ engine reimplementation of the 1994 MS-DOS FPS shooter Nitemare 3D
 I started this project because I believe every game has the right to be ported to modern operating systems,
 the original game was made in C with some x86 assembly, this new version is in C++ and only uses open source, cross platform libraries.
 
+#file format documentation:
 
-### libraries used(so far):
-* SDL2
-* tinyfiledialogs
+##map format
+maps are in MAP.1-3
 
-## current goals:
-- [x] get original sprite files working with SDL2
-
-- [] create topdown version of game
-
-- [] use raycasting to bring topdown version to the third dimension
-- [] implement A* navigation
-
-
-
-[![Demo](https://img.youtube.com/vi/rjXbe1gkl9I/0.jpg)](https://www.youtube.com/watch?v=rjXbe1gkl9I)
-
+bytes 0-514:  ¯\_(ツ)_/¯
+after that each map is stored in a 8192 byte chunk, with even bytes containing tiles, and odd bytes containing item
