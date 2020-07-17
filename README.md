@@ -7,9 +7,9 @@ a C++ engine reimplementation of the 1994 MS-DOS FPS shooter Nitemare 3D
 I started this project because I believe every game has the right to be ported to modern operating systems,
 the original game was made in C with some x86 assembly, this new version is in C++ and only uses open source, cross platform libraries.
 
-#file format documentation:
+# file format documentation:
 
-##map format
+## map format
 maps are in MAP.1-3
 
 bytes 0-514:  ¯\_(ツ)_/¯
