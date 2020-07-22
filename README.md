@@ -29,3 +29,11 @@ maps are in MAP.1-3
 ### data:
 bytes 0-514:  ¯\_(ツ)_/¯.
 after that each map is stored in a 8192 byte chunk, with even bytes containing tiles, and odd bytes containing item.
+
+
+## installing
+in order to run this you need some of the original game files [which can still be bought from David Gray's Website](https://www.dgray.com/n3dpage.htm).
+
+### files needed:
+* IMG.1
+* MAP.1
