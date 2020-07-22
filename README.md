@@ -28,7 +28,7 @@ maps are in MAP.1-3
 
 ### data:
 bytes 0-514:  ¯\_(ツ)_/¯.
-after that each map is stored in a 8192 byte chunk, with even bytes containing tiles, and odd bytes containing item.
+after that each map is stored in a 8192 byte chunk, with even bytes containing tiles, and odd bytes containing items.
 
 
 ## installing
@@ -37,3 +37,9 @@ in order to run this you need some of the original game files [which can still b
 ### files needed:
 * IMG.1
 * MAP.1
+
+## credits
+* BBQGiraffe: 90% of the code
+* David Gray: making Nitemare 3D
+* Lodev: making a great raycaster tutorial
+
