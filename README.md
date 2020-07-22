@@ -11,7 +11,8 @@ the original game was made in C with some x86 assembly, this new version is in C
 ## features:
 * loads original bitmap files
 * loads original maps
-
+* software based raycaster
+* portable and could easily ported to most graphics libraries
 
 ## todo:
 * load VOC sounds and MIDI music from SND.DAT
