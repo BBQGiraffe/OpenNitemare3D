@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="engine">
+      <UniqueIdentifier>{d1cda2ce-c33e-4864-bc44-d037e036f83e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\pal">
+      <UniqueIdentifier>{7db0c3c1-4803-4975-9851-3ee5fdc24d79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\img">
+      <UniqueIdentifier>{cecc57ac-9712-4776-8c11-c3cef62783bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\input">
+      <UniqueIdentifier>{390196a0-f76a-4eb7-a12e-9aef2d6e5b77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{a9761b7f-8a41-4590-8962-72d5b1ef2c86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\entity">
+      <UniqueIdentifier>{72b5627f-c898-482e-ac21-444ff36fcc2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\math">
+      <UniqueIdentifier>{a0a8a9ec-16ea-426b-ab88-e275720d80f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entities">
+      <UniqueIdentifier>{7328e56c-da6c-4960-83e0-bffcd1fc5d0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\entities\player">
+      <UniqueIdentifier>{d23c70d9-4f5e-4edc-9928-352ada0ad377}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\camera">
+      <UniqueIdentifier>{16229d52-3d60-4766-bb18-353b4b6f89b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\map">
+      <UniqueIdentifier>{503263a6-a637-43c3-8cf8-07e215306731}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="engine\img\img.cpp">
+      <Filter>engine\img</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\pal\pal.cpp">
+      <Filter>engine\pal</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="engine\math\Vector2i.cpp">
+      <Filter>engine\math</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\entity\Entity.cpp">
+      <Filter>engine\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\math\Vector2f.cpp">
+      <Filter>engine\math</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\camera\Camera.cpp">
+      <Filter>engine\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="game\entities\player\Player.cpp">
+      <Filter>game\entities\player</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="engine\img\img.h">
+      <Filter>engine\img</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\pal\pal.h">
+      <Filter>engine\pal</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entity\Entity.h">
+      <Filter>engine\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\math\Vector2i.h">
+      <Filter>engine\math</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\math\Vector2f.h">
+      <Filter>engine\math</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entities\Frankenstein.h">
+      <Filter>game\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\img\Color.h">
+      <Filter>engine\img</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\img\Sprite.h">
+      <Filter>engine\img</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\camera\Camera.h">
+      <Filter>engine\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\map\Map.h">
+      <Filter>engine\map</Filter>
+    </ClInclude>
+    <ClInclude Include="game\entities\player\Player.h">
+      <Filter>game\entities\player</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

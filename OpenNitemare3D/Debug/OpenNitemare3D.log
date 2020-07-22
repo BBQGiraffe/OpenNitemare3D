@@ -1,0 +1,8 @@
+﻿  img.cpp
+C:\Users\robot\source\repos\OpenNitemare3D\OpenNitemare3D\engine\img\img.cpp(89,24): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\robot\source\repos\OpenNitemare3D\OpenNitemare3D\engine\img\img.cpp(100,10): error C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\robot\source\repos\OpenNitemare3D\OpenNitemare3D\engine\img\img.cpp(96,11): warning C4101: 'temp': unreferenced local variable
+  pal.cpp
+C:\Users\robot\source\repos\OpenNitemare3D\OpenNitemare3D\engine\pal\pal.cpp(45,25): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\robot\source\repos\OpenNitemare3D\OpenNitemare3D\engine\pal\pal.cpp(28,16): error C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Generating Code...
