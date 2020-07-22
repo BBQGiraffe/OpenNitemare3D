@@ -190,7 +190,6 @@ void main() {
 	SDL_RenderSetLogicalSize(renderer, 320, 240);
     
 	Player* player = new Player(22, 56, c, map);
-    std::cout << "cock\n";
     
     
 
