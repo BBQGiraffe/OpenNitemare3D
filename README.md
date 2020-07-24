@@ -6,10 +6,11 @@ reimplementation of the 1994 FPS Nitemare 3D
 * Loading of original bitmap images
 * Loading of original maps
 * Easily portable to most graphics libraries
-* Playback of midi music
+* Playback of MIDI music
+* Playback of SFX from the Windows version
 
 ## currently being worked on:
-* SFX loading
+* SFX loading for Dos format
 * PCX image loading
 
 ## notes:
