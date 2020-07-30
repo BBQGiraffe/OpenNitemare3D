@@ -1,12 +1,18 @@
 #ifndef _MAP_H
 #define _MAP_H
 #include <vector>
+#include <string>
+#include <fstream>
 class Map {
+private:
+    char* mapbuff = new char[8192];
+    
 public:
-    std::vector<int> maptiles;
-    Map() {
+    char* maptiles = new char[4096];
+    Map(std::string file) {
 
     }
+    void LoadMap(int index);
 
 
 };

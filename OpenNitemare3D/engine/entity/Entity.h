@@ -2,6 +2,9 @@
 #define _ENTITY_H
 #include "../camera/Camera.h"
 #include "../map/Map.h"
+#include "../sounds/Sounds.h"
+#include "../../engine/sound/Sound.h"
+#include "../dat/Datreader.h"
 #include <vector>
 class Entity {
 
@@ -9,15 +12,31 @@ protected:
 	Vector2f position;
 	Vector2i tilePosition;
 	Vector2i hitbox;
-	int sprite;
+	Datreader* snd;
+	
 	float rotation;
 	std::vector<Entity*>* entities;
 
 	void AddEntity(Entity* entity);
 	Camera* camera;
-	Map map;
+	Map* map;
 
 public:
+	enum Direction {
+		NORTH,
+		EAST,
+		SOUT,
+		WEST
+	};
+	enum Type {
+		STATIC,
+		NPC,
+		PLAYER,
+		PICKUP,
+		PUSHABLE
+	};
+	Direction direction;
+	Type type;
 	Entity();
 	
 	//getters

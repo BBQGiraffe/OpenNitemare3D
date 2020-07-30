@@ -6,18 +6,18 @@ Player::Player()
 	
 }
 
-Player::Player(float x, float y, Camera* camera, Map map)
+Player::Player(float x, float y, Camera* camera, Map map, Datreader* snd)
 {
-	SetPosition(x + 20, y);
-	SetRotation(0);
+	SetPosition(x, y);
 	this->camera = camera;
-	this->map = map;
-
+	this->map = &map;
+	this->snd = snd;
+	Sound::PlaySound(PLAYER_PLASMA_PISTOL_FIRE, *this->snd);
+	SetRotation(-1.57f);
 }
 
 void Player::Update(float deltaTime)
 {
-	//SetRotation_(90);
 	float rotSpeed = deltaTime * 3; //the constant value is in radians/second
 	float oldRot = rotation;
 	const Uint8* state = SDL_GetKeyboardState(NULL);
@@ -37,6 +37,11 @@ void Player::Update(float deltaTime)
 	if (state[SDL_SCANCODE_RIGHT]) {
 		rotation += rotSpeed;
 	}
+	if (state[SDL_SCANCODE_SPACE]) {
+		Sound::PlaySound(PLAYER_PLASMA_PISTOL_FIRE, *this->snd);
+	}
+
+	
 
 	dirX = cos(rotation);
 	dirY = sin(rotation);
@@ -49,8 +54,16 @@ void Player::OnCollision(Entity* sender)
 {
 }
 
-void Player::SetRotation_(float rot)
+
+
+void Player::SetRotation(float rotation)
 {
-	camera->planeX = camera->planeX * cos(rot) - camera->planeY * sin(rot);
-	camera->planeY = camera->planeX * sin(rot) + camera->planeY * cos(rot);
+	float oldRot = this->rotation;
+	dirX = cos(rotation);
+	dirY = sin(rotation);
+	float oldPlaneX = camera->planeX;
+	camera->planeX = camera->planeX * cos(rotation - oldRot) - camera->planeY * sin(rotation - oldRot);
+	camera->planeY = oldPlaneX * sin(rotation - oldRot) + camera->planeY * cos(rotation - oldRot);
+
+	this->rotation = rotation;
 }

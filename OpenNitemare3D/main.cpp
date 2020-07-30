@@ -5,6 +5,9 @@
 #include "game/entities/player/Player.h"
 #include <SDL_mixer.h>
 #include <fstream>
+#include <SDL_image.h>
+#include "engine/dr_pcx.h"
+#include "engine/tiles/Tiles.h"
 IMG img;
 
 SDL_Window* window = SDL_CreateWindow("Nitemare 3D", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, 0);
@@ -70,8 +73,10 @@ Color GetPixel(Sprite* sprite, int x, int y) {
 
 
 
-std::vector<size_t> offsets;
 char* mapbuff = new char[8192];
+char* maptiles = new char[4096];
+char* entities = new char[4096];
+
 void LoadMap(int index) {
     std::ifstream is;
 
@@ -83,42 +88,6 @@ void LoadMap(int index) {
 }
 #include <assert.h>
 
-
-/*
-for some reason Nitemare 3D has room types for floors and draws the walls based the room type
-
-
-    floor layout in map file:
-        #####
-        #####
-        &&&&&
-    
-    what's drawn:
-         WWWW
-        W####W
-        W####W
-        D&&&&D
-         DDDD
-
-    so now I have to write a bunch of sphagetti code to fix this
-*/
-void AddWalls(std::vector<int> map) {
-    for (int x = 0; x < 64; x++) {
-        for (int y = 0; y < 64; y++) {
-            int i = x + y*64;
-            
-            //if the nearby is empty, add wall
-            if (map[i] != 1) {
-                int X = x - 1;
-                int I = X + y * 64;
-                if (map[I] == 1) {
-                    //std::cout << "Tile " << X << "," << y << " should be wall! \n";
-                    map[I] == 420;
-                }
-            }
-        }
-    }
-}
 Uint32 time = 0; //time of current frame
 Uint32 oldTime = 0; //time of previous frame
 const int fps = 60;
@@ -126,58 +95,192 @@ const int fpsDelay = 1000 / fps;
 Uint32 frameStart;
 int frameTime;
 
-int CalculateOffset(int index) {
-    if (index > 14) {
-        return index - 8;
-    }
+Uint8* audioBuff = nullptr;
+Uint8* audioBuffEnd = nullptr;
 
-    return 0;
+
+char pitch = 1;
+
+void audioCallback(void* userdata, Uint8* stream, int len)
+{
+    Uint32 length = (Uint32)len;
+    for (Uint32 i = 0; i < length; i++)
+    {
+        if (audioBuff > audioBuffEnd)
+        {
+            return;
+        }
+
+        stream[i] = audioBuff[0];
+        stream[++i] = audioBuff[1];
+        audioBuff += 2 * pitch;
+    }
+}
+
+Tiles tiles;
+void RegisterTiles() {
+    
+    tiles.RegisterTile(0, 229);
+    tiles.RegisterTile(1, 0); //Dining Room - Plain
+    tiles.RegisterTile(2, 1); //Dining Room - Small Picture
+    tiles.RegisterTile(3, 2); //Dining Room - Sconces
+    tiles.RegisterTile(4, 4); //Dining Room - Hutch
+    tiles.RegisterTile(5, 6); //Dining Room - Large Picture
+
+
+    tiles.RegisterTile(6, 8); //Dining Room - Window
+    tiles.RegisterTile(7, 8); //Dining Room - Curtains
+
+
+    tiles.RegisterTile(8, 10); //Dining Room - Panel R
+    tiles.RegisterTile(9, 11); //Dining Room - Panel L
+    tiles.RegisterTile(10, 12); //Living Room - Plain
+    tiles.RegisterTile(11, 13); //Living Room - Curtains
+    tiles.RegisterTile(12, 14); //Living Room - Window
+    tiles.RegisterTile(13, 15); //Living Room - Bookcase
+    tiles.RegisterTile(14, 16); //Living Room - Fireplace
+    tiles.RegisterTile(15, 24); //Living Room - Panel Right
+    tiles.RegisterTile(16, 25); //Living Room - Panel Left
+    tiles.RegisterTile(17, 26); //Kitchen - Sink Area
+    tiles.RegisterTile(18, 27); //Kitchen - Fuse box
+    tiles.RegisterTile(19, 28); //Kitchen - Stove Area
+    tiles.RegisterTile(20, 29); //Kitchen - Plain
+    tiles.RegisterTile(21, 30); //Kitchen - Door(red key)
+    tiles.RegisterTile(22, 31); //*Kitchen - Door (stairs up)
+    tiles.RegisterTile(23, 32); //*Kitchen - Door (stairs down)
+    tiles.RegisterTile(24, 33); //Kitchen - Panel Right
+    tiles.RegisterTile(25, 34); //Kitchen - Panel Left
+    tiles.RegisterTile(26, 35); //Beige Hallway - Plain
+    tiles.RegisterTile(27, 36); //Beige Hallway - Panel Right
+    tiles.RegisterTile(28, 37); //Beige Hallway - Panel Left
+    tiles.RegisterTile(29, 38); //Grey Hallway - Plain
+    tiles.RegisterTile(30, 39); //Grey Hallway - Panel Right
+    tiles.RegisterTile(31, 40); //Grey Hallway - Panel Left
+    tiles.RegisterTile(32, 41); //Garden - Plain
+    tiles.RegisterTile(33, 42); //Garden - Eyes Right
+    tiles.RegisterTile(34, 43); //Garden - Eyes Left
+    tiles.RegisterTile(35, 44); //Garden - Gargoyle
+    tiles.RegisterTile(36, 45); //Office - Plain
+    tiles.RegisterTile(37, 46); //Office - Desk
+    tiles.RegisterTile(38, 48); //Office - Cabinets
+    tiles.RegisterTile(39, 49); //Office - Chalkboard
+    tiles.RegisterTile(40, 50); //Office - Sconces
+    tiles.RegisterTile(41, 52); //Bedroom 1 - Plain
+    tiles.RegisterTile(42, 53); //Bedroom 1 - Window
+    tiles.RegisterTile(43, 54); //Bedroom 1 - Dresser
+    tiles.RegisterTile(44, 55); //Bedroom 1 - Mirror
+    tiles.RegisterTile(45, 56); //Bedroom 3/1 Door (Green key)
+    tiles.RegisterTile(46, 57); //Bedroom 1/3 Door (Green key)
+    tiles.RegisterTile(47, 58); //Closet - Full
+    tiles.RegisterTile(48, 59); //Closet - Panel Right
+    tiles.RegisterTile(49, 60); //Closet - Panel Left
+    tiles.RegisterTile(50, 61); //Bedroom 2 - Window
+    tiles.RegisterTile(51, 62); //Bedroom 2/1 Door (Blue key)
+    tiles.RegisterTile(52, 63); //Bedroom 1/2 Door (Blue key)
+    tiles.RegisterTile(53, 64); //Bedroom 2 - Plain
+    tiles.RegisterTile(54, 65); //Bedroom 2 - Picture
+    tiles.RegisterTile(55, 66); //Kitchen - inside & out
+    tiles.RegisterTile(56, 67); //Bedroom 3 - Panel Right
+    tiles.RegisterTile(57, 68); //Bedroom 3 - Panel Left
+    tiles.RegisterTile(58, 69); //Kitchen - patio door
+    tiles.RegisterTile(59, 70); //Bedroom 3 - Plain
+    tiles.RegisterTile(60, 71); //Bedroom 3 - Window
+    tiles.RegisterTile(61, 72); //Bedroom 3/3 Door (green key)
+    tiles.RegisterTile(62, 73); //Kitchen Refridgerator (half tile)
+    tiles.RegisterTile(63, 74); //*Bedroom 3 - Door (stairs down)
+    tiles.RegisterTile(64, 75); //*Beige Hall - Stairs up (half tile)
+    tiles.RegisterTile(65, 76); //*Beige Hall - Stairs down (half tile)
+    tiles.RegisterTile(66, 77); //*Beige Hall - Stairs up and down
+    tiles.RegisterTile(67, 78); //*Beige Hall - Stairs down and up
+    tiles.RegisterTile(68, 79); //Bedroom 4 - Curtain
+    tiles.RegisterTile(69, 80); //Bedroom 4 - Plain
+    tiles.RegisterTile(70, 81); //Bedroom 4 - Window
+    tiles.RegisterTile(71, 82); //Attic - Plain
+    tiles.RegisterTile(72, 83); //Attic - Target
+    tiles.RegisterTile(73, 84); //Attic - Mice,Spider
+    tiles.RegisterTile(74, 85); //Attic - Boxes, Mouse
+    tiles.RegisterTile(75, 86); //Attic - Window
+    tiles.RegisterTile(76, 87); //Attic - Clothing
+    tiles.RegisterTile(77, 88); //Attic - Trunk
+    tiles.RegisterTile(78, 89); //Living Room - Large Picture
+    tiles.RegisterTile(79, 90); //Dining Room - Small Bookcase
+    tiles.RegisterTile(80, 91); //Cemetery - Plain
+    tiles.RegisterTile(81, 92); //Cemetery - Gargoyle
+
+    
+
+    //Dining Room curtains
+    tiles.RegisterTile(11, 9);
+    tiles.RegisterTile(112, 9);
+    tiles.RegisterTile(113, 9);
+
+    
+
+    tiles.RegisterTile(114, 13);
+
+   
+}
+Player* player;
+
+//thankfully the map viewer comes with readable text files that have entity names and id's
+void SpawnEntity(char id, int x, int y) {
+    if (id > 0 && id <= 4) {
+        player->SetPosition(x, y);
+        return;
+    }
+    
+    
 }
 
 
+
+
 void main() {
+    RegisterTiles();
+
+    LoadMap(0);
+    
+    SDL_Init(SDL_INIT_AUDIO);
+
+
+    SDL_AudioSpec wavSpec;
+    SDL_memset(&wavSpec, 0, sizeof(wavSpec)); /* or SDL_zero(want) */
+
+    wavSpec.callback = audioCallback;
+    wavSpec.userdata = nullptr;
+    wavSpec.format = AUDIO_S16;
+    wavSpec.channels = 2;
+    wavSpec.samples = 2048;
+
+    if (SDL_OpenAudio(&wavSpec, NULL) < 0)
+    {
+        fprintf(stderr, "Could not open audio: %s\n", SDL_GetError());
+    }
 
     
-    LoadMap(0);
-    Map map;
+
+    Mix_OpenAudioDevice(10989, AUDIO_U8, 1, 2048, SDL_GetAudioDeviceName(0, 0), 1);
    
+    Datreader snd("SND.DAT");
+    Datreader uif("UIF.DAT");
 
-    std::ofstream myfile("map1.txt", std::ios::binary);
-    for (int i = 0; i < 64 * 64; i++) {
-        map.maptiles.push_back(0);
-    }
-    if (myfile.is_open())
-    {
-        int j = 0;
-        int k = 64 * 64;
-        for (int i = 0; i < 64 * 64*2; i++) {
-
-            if (i % 2 == 0) {
-                
-                //maptiles.push_back(mapbuff[i]);
-                map.maptiles[j] = mapbuff[i];
-                k--;
-                j++;
-                myfile << mapbuff[i];
-
-            }
-            
-            
-        }
         
-        myfile.close();
-    }
+    Music::PlaySong(7, snd, -1);
+    
+    
+    
+ 
+    
+    Map map("MAP.1");
+    
+    
+
+   
+    
 
 
-    AddWalls(map.maptiles);
-  /*
-    int j = 0;
-    for (int i = 0; i < 64 * 64 * 2; i++) {
-        if (j % 2 == 0) {
-            maptiles[i] = mapbuff[i];
-        }
-    }
-    */
+    
+
 
 	Camera* c = new Camera();
 	
@@ -189,16 +292,35 @@ void main() {
 	SDL_Event event;
 	SDL_RenderSetLogicalSize(renderer, 320, 240);
     
-	Player* player = new Player(22, 56, c, map);
+	player = new Player(0, 0, c, map, &snd);
     
-    
+    int j = 0;
+    int x = 0, y = 0;
+    for (int i = 0; i < 64 * 64 * 2; i++) {
 
+        if (i % 2 == 0) {
+            maptiles[j] = mapbuff[i];
+            j++;
+
+
+        }
+        else {
+            SpawnEntity(mapbuff[i], x, y);
+            x++;
+            if (x == 64) {
+                x = 0;
+                y++;
+            }
+        }
+
+
+
+    }
 	while (open) {
-        //std::cout << player->GetTilePosition().x << "," << player->GetTilePosition().y << std::endl;
         Uint64 start = SDL_GetPerformanceCounter();
         frameStart = SDL_GetTicks();
 		while (SDL_PollEvent(&event)) {
-
+            
 		}
 		SDL_RenderClear(renderer);
 		
@@ -208,22 +330,22 @@ void main() {
         for (int x = 0; x < ray_w; x++)
         {
             //calculate ray position and direction
-            double cameraX = 2 * x / double(ray_w) - 1; //x-coordinate in camera space
-            double rayDirX = player->dirX + c->planeX * cameraX;
-            double rayDirY = player->dirY + c->planeY * cameraX;
+            float cameraX = 2 * x / float(ray_w) - 1; //x-coordinate in camera space
+            float rayDirX = player->dirX + c->planeX * cameraX;
+            float rayDirY = player->dirY + c->planeY * cameraX;
             //which box of the map we're in
 
             int mapX = player->GetTilePosition().x;//int(posX);
             int mapY = player->GetTilePosition().y;//int(posY);
 
             //length of ray from current position to next x or y-side
-            double sideDistX;
-            double sideDistY;
+            float sideDistX;
+            float sideDistY;
 
             //length of ray from one x or y-side to next x or y-side
-            double deltaDistX = std::abs(1 / rayDirX);
-            double deltaDistY = std::abs(1 / rayDirY);
-            double perpWallDist;
+            float deltaDistX = std::abs(1 / rayDirX);
+            float deltaDistY = std::abs(1 / rayDirY);
+            float perpWallDist;
 
             //what direction to step in x or y-direction (either +1 or -1)
             int stepX;
@@ -282,19 +404,13 @@ void main() {
 
                 //what?
                 //int wall = map.maptiles[-(mapX - mapY * 64)];
-                int wall = map.maptiles[mapX + mapY * 64];
+                int wall = maptiles[mapX + mapY * 64];
                 texture = wall;
               
-                if (texture >= 3) {
-                    texture++;
-                }
-                if (texture >= 4) {
-                    texture++;
-                }
-
+                
+                
                 if (wall <= 181 && wall > 0) hit = 1;
-                
-                
+
                 
             }
 
@@ -336,8 +452,7 @@ void main() {
                 // Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
                 int texY = (int)texPos & (64 - 1);
                 texPos += step;
-                
-                DrawPixel(x, y, GetPixel(img[texture], texY, texX));
+                DrawPixel(x, y, GetPixel(img[tiles.GetTile(texture).texture], texY, texX));
             }
 
             
@@ -347,10 +462,15 @@ void main() {
 
         }
 
+
+
+
+
+        //deltaTime stuff
         oldTime = time;
         time = SDL_GetTicks();
         
-        float frameTime = (time - oldTime) / 1000.0; //frametime is the time this frame has taken, in seconds
+        float frameTime = (time - oldTime) / 1000.0; 
 
         if (fpsDelay > frameTime) {
             SDL_Delay(fpsDelay - frameTime);
@@ -372,34 +492,16 @@ void main() {
         
 
         
-        //player->SetPosition(posX, posY);
         Draw2DSprite(img[700], 160, 100);
         
 
-        
-        for (int x = 0; x < 64; x++) {
-            for (int y = 0; y < 64; y++) {
-                int ti = -(x - y * 64);
-
-                if (map.maptiles[ti] != 1) {
-                    //Draw2DSprite(img[1], x * 64, y * 64);
-                    DrawPixel(x, y, Color(255, 255, 255));
-                }
-                else {
-                    DrawPixel(x, y, Color(0, 0, 0));
-                }
-            }
-        }
-        
-		
-        DrawPixel(player->GetTilePosition().x, player->GetTilePosition().x, Color(0, 0, 0));
-
+     
 
 		SDL_UpdateTexture(canvas, NULL, pixels, ray_w * sizeof(Uint32));
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderCopy(renderer, canvas, NULL, NULL);
-		SDL_RenderPresent(renderer);
-
+        SDL_RenderPresent(renderer);
+        
 
 
       

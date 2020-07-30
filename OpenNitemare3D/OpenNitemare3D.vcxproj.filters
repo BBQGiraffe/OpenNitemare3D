@@ -37,6 +37,21 @@
     <Filter Include="engine\map">
       <UniqueIdentifier>{503263a6-a637-43c3-8cf8-07e215306731}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\dat">
+      <UniqueIdentifier>{95a694ca-de89-4573-b0d5-d7c918577152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\sound">
+      <UniqueIdentifier>{2549fab6-9d6e-4865-b457-80bf08d3943e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\sounds">
+      <UniqueIdentifier>{adcd69c8-b59b-490c-9d63-eb9909c52f29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\tiles">
+      <UniqueIdentifier>{9a057688-4559-408b-be05-bfa6df954a24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\objects">
+      <UniqueIdentifier>{67ab42a2-d6f4-4d78-870c-670b8555dafb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\img\img.cpp">
@@ -45,7 +60,6 @@
     <ClCompile Include="engine\pal\pal.cpp">
       <Filter>engine\pal</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="engine\math\Vector2i.cpp">
       <Filter>engine\math</Filter>
     </ClCompile>
@@ -60,6 +74,25 @@
     </ClCompile>
     <ClCompile Include="game\entities\player\Player.cpp">
       <Filter>game\entities\player</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="engine\sound\Music.cpp">
+      <Filter>engine\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\map\Map.cpp">
+      <Filter>engine\map</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\dr_pcx.c">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\dat\Datreader.cpp">
+      <Filter>engine\dat</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\sound\Sound.cpp">
+      <Filter>engine\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\tiles\Tiles.cpp">
+      <Filter>engine\tiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +128,34 @@
     </ClInclude>
     <ClInclude Include="game\entities\player\Player.h">
       <Filter>game\entities\player</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\dat\Datreader.h">
+      <Filter>engine\dat</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\dat\Datoffset.h">
+      <Filter>engine\dat</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\sound\Music.h">
+      <Filter>engine\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\dr_pcx.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\sound\Sound.h">
+      <Filter>engine\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\sounds\Sounds.h">
+      <Filter>game\sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="game\hud\Hud.h" />
+    <ClInclude Include="engine\map\Tile.h">
+      <Filter>engine\map</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\map\AnimatedTile.h">
+      <Filter>engine\map</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\tiles\Tiles.h">
+      <Filter>engine\tiles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
