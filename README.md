@@ -12,6 +12,7 @@ reimplementation of the 1994 FPS Nitemare 3D
 ## currently being worked on:
 * SFX loading for Dos format
 * PCX image loading
+* Loading entities from map and drawing them
 
 ## notes:
 ### game quirks:
