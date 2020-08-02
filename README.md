@@ -1,6 +1,7 @@
 # OpenNitemare3D
 reimplementation of the 1994 FPS Nitemare 3D
-
+[Twitter](https://twitter.com/BbqGiraffe).
+[Discord](https://discord.gg/H4E8Nn9).
 
 ## features:
 * Loading of original bitmap images
