@@ -235,7 +235,7 @@ void SpawnEntity(char id, int x, int y) {
 
 
 
-void main() {
+int main() {
     RegisterTiles();
 
     LoadMap(0);
@@ -509,4 +509,6 @@ void main() {
 		
 
 	}
+
+    return 0;
 }
