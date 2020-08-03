@@ -88,7 +88,7 @@ void LoadMap(int index) {
 }
 #include <assert.h>
 
-Uint32 time = 0; //time of current frame
+Uint32 curTime = 0; //time of current frame
 Uint32 oldTime = 0; //time of previous frame
 const int fps = 60;
 const int fpsDelay = 1000 / fps;
@@ -467,10 +467,10 @@ int main() {
 
 
         //deltaTime stuff
-        oldTime = time;
-        time = SDL_GetTicks();
+        oldTime = curTime;
+        curTime = SDL_GetTicks();
         
-        float frameTime = (time - oldTime) / 1000.0; 
+        float frameTime = (curTime - oldTime) / 1000.0;
 
         if (fpsDelay > frameTime) {
             SDL_Delay(fpsDelay - frameTime);
