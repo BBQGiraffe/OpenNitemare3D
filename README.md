@@ -36,3 +36,4 @@ maps are stored as text files and are very easy to read, the first 514 bytes are
 after that every map is stored as a 8192 byte chunk, every even byte is a tile id and every odd byte is a item id.
 
 
+2021 Update: I have no motivation for this project, if you are skilled in reverse engineering and want to take over DM me on Twitter @BBQGiraffe_ I will transfer ownership of the discord server and github repo, there's not much but there's still some documentation on the games formats
