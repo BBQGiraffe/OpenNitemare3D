@@ -1,7 +1,13 @@
 # OpenNitemare3D
 reimplementation of the 1994 FPS Nitemare 3D
-[Twitter](https://twitter.com/BbqGiraffe).
-[Discord](https://discord.gg/H4E8Nn9).
+[Twitter](https://twitter.com/CatboiN).
+[Discord](https://discord.gg/9wadBteE).
+
+# 2021 July Update: 
+I've gotten interest in this project again and have started porting this to C# because C++ is for sociopaths with no will to live, my programming skills were kind of horrible when I first wrote this port especially since I was trying to get around C++'s fuckery, also added my discord link and new Twitter, if you happen to be skilled with reverse engineering and x86 assembly please contact me as I suck 
+
+-BBQ
+
 
 ## features:
 * Loading of original bitmap images
@@ -35,5 +41,3 @@ UIF.DAT consists of 256 color 320x200 PCX images
 maps are stored as text files and are very easy to read, the first 514 bytes are still unknown by me(could be tile definitions?)
 after that every map is stored as a 8192 byte chunk, every even byte is a tile id and every odd byte is a item id.
 
-
-2021 Update: I have no motivation for this project, if you are skilled in reverse engineering and want to take over DM me on Twitter @BBQGiraffe_ I will transfer ownership of the discord server and github repo, there's not much but there's still some documentation on the games formats
